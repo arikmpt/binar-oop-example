@@ -42,8 +42,11 @@ class Server {
             // let fileStream = FS.createReadStream(filePath, "UTF-8");
             // fileStream.pipe(res);
             res.writeHead(200, {
-                "Content-Type": 'image/jpg' });
-     
+                "Content-Type": `${
+                  fileType === "svg" ? "image/svg+xml" : `image/${fileType}`
+                }`,
+            });
+        
             // Reading the file
             FS.readFile(filePath,function (err, content) {
                 // Serving the image
