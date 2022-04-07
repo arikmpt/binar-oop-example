@@ -39,8 +39,16 @@ class Server {
             fileStream.pipe(res);
         } else if(req.url.match("\.jpg$") || req.url.match("\.png$") || req.url.match("\.jpeg$")){
             let filePath = PATH.join(__dirname, 'public', req.url);
-            let fileStream = FS.createReadStream(filePath, "UTF-8");
-            fileStream.pipe(res);
+            // let fileStream = FS.createReadStream(filePath, "UTF-8");
+            // fileStream.pipe(res);
+            res.writeHead(200, {
+                "Content-Type": 'image/jpg' });
+     
+            // Reading the file
+            FS.readFile(filePath,function (err, content) {
+                // Serving the image
+                res.end(content);
+            });
         } else {
             res.setHeader('Content-Type', 'text-html')
             res.writeHead(200)
